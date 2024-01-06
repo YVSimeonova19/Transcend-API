@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Transcend.DAL\Transcend.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
