@@ -7,19 +7,25 @@ namespace Transcend.DAL.Models;
 public class Order
 {
     [Required]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
+    [Required]
     public string Name { get; set; } = string.Empty;
 
-    public Status Status { get; set; }
+    [Required]
+    public OrderStatus Status { get; set; }
 
+    [Required]
     public DateTime ExpectedDeliveryDate { get; set; }
 
+    [Required]
     [ForeignKey(nameof(Carrier))]
     public int CarrierId { get; set; }
     public virtual Carrier Carrier { get; set; } = new Carrier();
 
+    [Required]
     [ForeignKey(nameof(User))]
-    public int UserPlaceId { get; set; }
+    public string UserPlaceId { get; set; } = String.Empty;
     public virtual User User { get; set; } = new User();
 }

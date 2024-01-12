@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Transcend.Common.Utilities;
 
-public enum Status
+public class Response
 {
-    WaitingForConfirmation,
-    Denied,
-    Accepted,
-    RecievedByCarrier,
-    AwaitingDelivery,
-    Delivered
+    public string Status { get; set; } = String.Empty;
+
+    public string Message { get; set; } = String.Empty;
 }

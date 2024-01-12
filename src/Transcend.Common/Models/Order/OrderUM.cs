@@ -9,7 +9,7 @@ namespace Transcend.Common.Models.Order;
 
 public class OrderUM
 {
-    public Status Status { get; set; }
+    public OrderStatus Status { get; set; }
 
     public DateTime ExpectedDeliveryDate { get; set; }
 }

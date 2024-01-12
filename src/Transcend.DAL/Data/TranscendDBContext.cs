@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Transcend.DAL.Models;
 
 namespace Transcend.DAL.Data;
 
-public class TranscendDBContext : DbContext
+public class TranscendDBContext : IdentityDbContext<User>
 {
     public TranscendDBContext(DbContextOptions<TranscendDBContext> options) : base(options)
     {
@@ -11,7 +12,6 @@ public class TranscendDBContext : DbContext
     }
 
     public DbSet<Order> Orders { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<UserDetails> UserDetails { get; set; }
     public DbSet<Carrier> Carriers { get; set; }
 
@@ -23,6 +23,16 @@ public class TranscendDBContext : DbContext
             .WithOne()
             .HasForeignKey(u => u.CarrierId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder
+            .Entity<User>()
+            .Property(u => u.CarrierId)
+            .IsRequired(false);
+
+        modelBuilder
+            .Entity<User>()
+            .Property(u => u.UserDetailsId)
+            .IsRequired(false);
 
         modelBuilder
             .Entity<User>()

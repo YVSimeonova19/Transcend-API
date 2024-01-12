@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transcend.DAL.Data;
 
@@ -11,9 +12,10 @@ using Transcend.DAL.Data;
 namespace Transcend.PL.Migrations
 {
     [DbContext(typeof(TranscendDBContext))]
-    partial class TranscendDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240112212931_UpdateUserTable")]
+    partial class UpdateUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,6 +223,7 @@ namespace Transcend.PL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("CarrierId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("CarrierId1")
@@ -267,6 +270,7 @@ namespace Transcend.PL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("UserDetailsId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -398,7 +402,8 @@ namespace Transcend.PL.Migrations
                     b.HasOne("Transcend.DAL.Models.Carrier", null)
                         .WithMany("Users")
                         .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Transcend.DAL.Models.Carrier", "Carrier")
                         .WithMany()
@@ -408,7 +413,9 @@ namespace Transcend.PL.Migrations
 
                     b.HasOne("Transcend.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("UserDetailsId");
+                        .HasForeignKey("UserDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Carrier");
 
