@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Transcend.Common.Utilities;
 
 namespace Transcend.DAL.Models;
 

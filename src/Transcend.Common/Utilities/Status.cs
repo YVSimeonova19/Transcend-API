@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transcend.DAL.Models;
+namespace Transcend.Common.Utilities;
 
 public enum Status
 {

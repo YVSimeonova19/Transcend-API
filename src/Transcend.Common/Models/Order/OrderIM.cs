@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transcend.Common.Utilities;
 
 namespace Transcend.Common.Models.Order;
 
-public class OrderVM
+public class OrderIM
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = string.Empty;
 
-    public string Status { get; set; } = string.Empty;
-
-    public DateTime ExpectedDeliveryDate { get; set; }
+    public int CarrierId { get; set; }
 }
