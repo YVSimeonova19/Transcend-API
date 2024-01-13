@@ -8,7 +8,7 @@ namespace Transcend.Common.Models.Order;
 
 public class OrderVM
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
 

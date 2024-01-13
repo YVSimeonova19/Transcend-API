@@ -8,13 +8,13 @@ namespace Transcend.PL.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(Roles = "Customer")]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly IUserService userService;
     private readonly IAuthService authService;
     private readonly ICurrentUser currentUser;
 
-    public UserController (IUserService userService, IAuthService authService, ICurrentUser currentUser)
+    public UsersController (IUserService userService, IAuthService authService, ICurrentUser currentUser)
     {
         this.userService = userService;
         this.authService = authService;

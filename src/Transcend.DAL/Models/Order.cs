@@ -21,11 +21,11 @@ public class Order
 
     [Required]
     [ForeignKey(nameof(Carrier))]
-    public int CarrierId { get; set; }
-    public virtual Carrier Carrier { get; set; } = new Carrier();
+    public string CarrierId { get; set; } = string.Empty;
+    public virtual User? Carrier { get; set; }
 
     [Required]
     [ForeignKey(nameof(User))]
     public string UserPlaceId { get; set; } = String.Empty;
-    public virtual User User { get; set; } = new User();
+    public virtual User? User { get; set; }
 }

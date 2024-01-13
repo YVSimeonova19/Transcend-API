@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Transcend.Common.Models.Carrier;
+using Transcend.Common.Models.Order;
 using Transcend.Common.Models.User;
 using Transcend.DAL.Models;
 
@@ -16,5 +17,7 @@ public class MappingProfile : Profile
 
         this.CreateMap<User, CarrierVM>()
             .ForMember(d => d.Name, c => c.MapFrom(s => s.Carrier.Name));
+
+        this.CreateMap<OrderIM, Order>();
     }
 }

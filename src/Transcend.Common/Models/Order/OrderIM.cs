@@ -15,5 +15,5 @@ public class OrderIM
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    public int CarrierId { get; set; }
+    public string CarrierId { get; set; }
 }

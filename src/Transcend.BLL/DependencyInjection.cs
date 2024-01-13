@@ -18,6 +18,7 @@ public static class DependencyInjection
             .AddScoped<ITokenService, TokenService>()
             .AddScoped<IUserService, UserService>()
             .AddScoped<ICurrentUser, CurrentUser>()
-            .AddScoped<ICarrierService, CarrierService>();
+            .AddScoped<ICarrierService, CarrierService>()
+            .AddScoped<IOrderService, OrderService>();
     }
 }
