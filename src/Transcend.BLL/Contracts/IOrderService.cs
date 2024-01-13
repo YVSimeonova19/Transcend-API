@@ -16,4 +16,8 @@ public interface IOrderService
     Task<OrderVM> GetOrderInfoByIdAsync(int orderId);
 
     Task<List<OrderVM>> GetAllOrdersByIdCarrierAsync(string carrierId);
+
+    Task<bool> CheckIfOrderExistsByIdAsync(int id);
+
+    Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM);
 }

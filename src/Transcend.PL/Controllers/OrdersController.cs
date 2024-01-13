@@ -5,6 +5,7 @@ using Transcend.BLL.Contracts;
 using Transcend.Common.Models.Carrier;
 using Transcend.Common.Models.Order;
 using Transcend.Common.Utilities;
+using Transcend.DAL.Models;
 
 namespace Transcend.PL.Controllers;
 
@@ -85,5 +86,19 @@ public class OrdersController : ControllerBase
             return this.Forbid();
 
         return this.Ok(order);
+    }
+
+    [HttpPatch("{id}")]
+    [Authorize(Roles = "Carrier")]
+    public async Task<ActionResult<OrderVM>> UpdateOrder([FromBody]OrderUM orderUM, int id)
+    {
+        if (!await orderService.CheckIfOrderExistsByIdAsync(id))
+            return NotFound();
+
+        var order = await orderService.GetOrderInfoByIdAsync(id);
+        if (order.CarrierId != currentUser.UserId)
+            return this.Forbid();
+
+        return await orderService.UpdateOrderAsync(id, orderUM);
     }
 }

@@ -49,4 +49,25 @@ internal class OrderService : IOrderService
     {
         return await this.dbContext.Orders.Where(o => o.CarrierId == carrierId).ProjectTo<OrderVM>(this.mapper.ConfigurationProvider).ToListAsync();
     }
+
+    public async Task<bool> CheckIfOrderExistsByIdAsync(int id)
+    {
+        return this.dbContext.Orders.Where(o => o.Id == id).Count() != 0;
+    }
+
+    public async Task<OrderVM> UpdateOrderAsync(int id, OrderUM orderUM)
+    {
+        var order = await this.dbContext.Orders.FindAsync(id);
+
+        if (orderUM.Status != null)
+            order.Status = orderUM.Status;
+
+        if (orderUM.ExpectedDeliveryDate != null)
+            order.ExpectedDeliveryDate = orderUM.ExpectedDeliveryDate;
+
+        this.dbContext.Orders.Update(order);
+        await this.dbContext.SaveChangesAsync();
+
+        return this.mapper.Map<OrderVM>(order);
+    }
 }
