@@ -16,17 +16,34 @@ internal class AuthService : IAuthService
     private readonly UserManager<User> userManager;
     private readonly SignInManager<User> signInManager;
     private readonly TranscendDBContext dbContext;
+    private readonly RoleManager<IdentityRole> roleManager;
 
-    public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, TranscendDBContext dbContext)
+    public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, TranscendDBContext dbContext, RoleManager<IdentityRole> roleManager)
     {
         this.userManager = userManager;
         this.signInManager = signInManager;
         this.dbContext = dbContext;
+        this.roleManager = roleManager;
+    }
+
+    public async Task<bool> CheckIfPasswordIsCorrectAsync(string username, string password)
+    {
+        var user = await this.userManager.FindByNameAsync(username);
+
+        if (user is null) 
+            return false;
+
+        return await this.userManager.CheckPasswordAsync(user, password);
     }
 
     public async Task<bool> CheckIfUserExistsAsync(string username, string email)
     {
         return await this.userManager.FindByEmailAsync(email) is not null && await this.userManager.FindByNameAsync(username) is not null;
+    }
+
+    public async Task<bool> CheckIfUserExistsAsync(string username)
+    {
+        return await this.userManager.FindByNameAsync(username) is not null;
     }
 
     public async Task<IdentityResult> CreateUserAsync(UserIM userIM)
@@ -46,11 +63,28 @@ internal class AuthService : IAuthService
         {
             Email = userIM.Email,
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = userIM.Email,
+            UserName = userIM.Username,
             PhoneNumber = userIM.PhoneNumber,
             UserDetailsId = userDetails.Id,
         };
 
-        return await userManager.CreateAsync(user, userIM.Password);
+        var result =  await userManager.CreateAsync(user, userIM.Password);
+
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+
+        if (!await this.roleManager.RoleExistsAsync(UserRoles.Customer))
+        {
+            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Customer));
+        }
+
+        if (await this.roleManager.RoleExistsAsync(UserRoles.Customer))
+        {
+            await this.userManager.AddToRoleAsync(user, UserRoles.Customer);
+        }
+
+        return result;
     }
 }

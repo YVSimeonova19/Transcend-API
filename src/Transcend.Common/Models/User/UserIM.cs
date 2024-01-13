@@ -10,6 +10,7 @@ namespace Transcend.Common.Models.User;
 public class UserIM
 {
     [Required]
+    [RegularExpression("^(?=.*[A-ZА-Яа-яa-z])([A-ZА-Яа-яa-z])([A-ZА-Яа-яa-z]{2,29})+(?<![_.])$", ErrorMessage = "Username is not valid")]
     public string Username { get; set; } = String.Empty;
 
     [Required]
@@ -38,7 +39,6 @@ public class UserIM
     public string PhoneNumber { get; set; } = String.Empty;
 
     [Required(ErrorMessage = "Shipping address is required")]
-    [RegularExpression("^(?=.*[A-ZА-Яа-яa-z])([A-ZА-Я])([a-zа-я]{2,79})+(?<![_.])$", ErrorMessage = "Shipping address is not valid")]
     [Display(Name = "Shipping address")]
     public string ShippingAddress { get; set; } = String.Empty;
 }

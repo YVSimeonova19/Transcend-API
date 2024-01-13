@@ -12,5 +12,9 @@ public interface IAuthService
 {
     Task<bool> CheckIfUserExistsAsync(string username, string email);
 
+    Task<bool> CheckIfUserExistsAsync(string username);
+
     Task<IdentityResult> CreateUserAsync(UserIM userIM);
+
+    Task<bool> CheckIfPasswordIsCorrectAsync(string username, string password);
 }
