@@ -12,7 +12,7 @@ using Transcend.DAL.Data;
 namespace Transcend.PL.Migrations
 {
     [DbContext(typeof(TranscendDBContext))]
-    [Migration("20240112201641_InitialCreate")]
+    [Migration("20240113165547_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,10 +222,7 @@ namespace Transcend.PL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("CarrierId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarrierId1")
+                    b.Property<int?>("CarrierId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -268,7 +265,7 @@ namespace Transcend.PL.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserDetailsId")
+                    b.Property<int?>("UserDetailsId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -278,8 +275,6 @@ namespace Transcend.PL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarrierId");
-
-                    b.HasIndex("CarrierId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -397,32 +392,17 @@ namespace Transcend.PL.Migrations
 
             modelBuilder.Entity("Transcend.DAL.Models.User", b =>
                 {
-                    b.HasOne("Transcend.DAL.Models.Carrier", null)
-                        .WithMany("Users")
-                        .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Transcend.DAL.Models.Carrier", "Carrier")
                         .WithMany()
-                        .HasForeignKey("CarrierId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarrierId");
 
                     b.HasOne("Transcend.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("UserDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserDetailsId");
 
                     b.Navigation("Carrier");
 
                     b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("Transcend.DAL.Models.Carrier", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Transcend.DAL.Models.User", b =>

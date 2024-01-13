@@ -8,7 +8,7 @@ namespace Transcend.Common.Models.User;
 
 public class UserVM
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     public string Username { get; set; } = String.Empty;
 

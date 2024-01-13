@@ -223,9 +223,6 @@ namespace Transcend.PL.Migrations
                     b.Property<int?>("CarrierId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CarrierId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -276,8 +273,6 @@ namespace Transcend.PL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarrierId");
-
-                    b.HasIndex("CarrierId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -395,16 +390,9 @@ namespace Transcend.PL.Migrations
 
             modelBuilder.Entity("Transcend.DAL.Models.User", b =>
                 {
-                    b.HasOne("Transcend.DAL.Models.Carrier", null)
-                        .WithMany("Users")
-                        .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Transcend.DAL.Models.Carrier", "Carrier")
                         .WithMany()
-                        .HasForeignKey("CarrierId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarrierId");
 
                     b.HasOne("Transcend.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
@@ -413,11 +401,6 @@ namespace Transcend.PL.Migrations
                     b.Navigation("Carrier");
 
                     b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("Transcend.DAL.Models.Carrier", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Transcend.DAL.Models.User", b =>

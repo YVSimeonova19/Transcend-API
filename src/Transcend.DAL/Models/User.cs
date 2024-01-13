@@ -8,11 +8,11 @@ public class User : IdentityUser
 {
     [ForeignKey(nameof(Carrier))]
     public int? CarrierId { get; set; }
-    public virtual Carrier Carrier { get; set; } = new Carrier();
+    public virtual Carrier? Carrier { get; set; }
 
     [ForeignKey(nameof(UserDetails))]
     public int? UserDetailsId { get; set; }
-    public virtual UserDetails UserDetails { get; set; } = new UserDetails();
+    public virtual UserDetails? UserDetails { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Order>? Orders { get; set; }
 }

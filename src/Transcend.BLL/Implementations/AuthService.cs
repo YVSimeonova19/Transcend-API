@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Transcend.BLL.Contracts;
+using Transcend.Common.Models.Carrier;
 using Transcend.Common.Models.User;
 using Transcend.DAL.Data;
 using Transcend.DAL.Models;
@@ -46,6 +47,45 @@ internal class AuthService : IAuthService
         return await this.userManager.FindByNameAsync(username) is not null;
     }
 
+    public async Task<bool> CheckIfUserExistsByIdAsync(string id)
+    {
+        return await this.userManager.FindByIdAsync(id) is not null;
+    }
+
+    public async Task<IdentityResult> CreateCarrierAsync(CarrierIM carrierIM)
+    {
+        Carrier carrier = new Carrier()
+        {
+            Name = carrierIM.Name
+        };
+
+        var user = new User()
+        {
+            UserName = carrierIM.Username,
+            Carrier = carrier,
+            UserDetails = null
+        };
+
+        var result = await userManager.CreateAsync(user, carrierIM.Password);
+
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+
+        if (!await this.roleManager.RoleExistsAsync(UserRoles.Carrier))
+        {
+            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Carrier));
+        }
+
+        if (await this.roleManager.RoleExistsAsync(UserRoles.Carrier))
+        {
+            await this.userManager.AddToRoleAsync(user, UserRoles.Carrier);
+        }
+
+        return result;
+    }
+
     public async Task<IdentityResult> CreateUserAsync(UserIM userIM)
     {
         UserDetails userDetails = new UserDetails()
@@ -55,9 +95,9 @@ internal class AuthService : IAuthService
             ShippingAddress = userIM.ShippingAddress,
         };
 
-        await this.dbContext.UserDetails.AddAsync(userDetails);
+        //await this.dbContext.UserDetails.AddAsync(userDetails);
 
-        await this.dbContext.SaveChangesAsync();
+        //await this.dbContext.SaveChangesAsync();
 
         var user = new User()
         {
@@ -65,13 +105,15 @@ internal class AuthService : IAuthService
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = userIM.Username,
             PhoneNumber = userIM.PhoneNumber,
-            UserDetailsId = userDetails.Id,
+            UserDetails = userDetails,
         };
 
         var result =  await userManager.CreateAsync(user, userIM.Password);
 
         if (!result.Succeeded)
         {
+            //this.dbContext.UserDetails.Remove(userDetails);
+            //await this.dbContext.SaveChangesAsync();
             return result;
         }
 

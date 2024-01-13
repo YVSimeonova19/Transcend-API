@@ -12,7 +12,7 @@ public class Carrier
     [Required]
     public string Name { get; set; } = string.Empty;
 
-    [Required]
-    [ForeignKey("Id")]
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    //[Required]
+    //[ForeignKey("Id")]
+    //public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

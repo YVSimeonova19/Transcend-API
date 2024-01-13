@@ -17,17 +17,22 @@ public class TranscendDBContext : IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .Entity<Carrier>()
-            .HasMany(c => c.Users)
-            .WithOne()
-            .HasForeignKey(u => u.CarrierId)
-            .OnDelete(DeleteBehavior.Cascade);
+        //modelBuilder
+        //    .Entity<Carrier>()
+        //    .HasMany(c => c.Users)
+        //    .WithOne()
+        //    .HasForeignKey(u => u.CarrierId)
+        //    .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder
             .Entity<User>()
             .Property(u => u.CarrierId)
             .IsRequired(false);
+
+        //modelBuilder
+        //    .Entity<User>()
+        //    .Property<string>("CarrierId1")
+        //    .IsRequired(false);
 
         modelBuilder
             .Entity<User>()

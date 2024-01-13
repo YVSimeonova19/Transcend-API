@@ -77,9 +77,8 @@ namespace Transcend.PL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CarrierId = table.Column<int>(type: "int", nullable: false),
-                    CarrierId1 = table.Column<int>(type: "int", nullable: false),
-                    UserDetailsId = table.Column<int>(type: "int", nullable: false),
+                    CarrierId = table.Column<int>(type: "int", nullable: true),
+                    UserDetailsId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -102,20 +101,12 @@ namespace Transcend.PL.Migrations
                         name: "FK_AspNetUsers_Carriers_CarrierId",
                         column: x => x.CarrierId,
                         principalTable: "Carriers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Carriers_CarrierId1",
-                        column: x => x.CarrierId1,
-                        principalTable: "Carriers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_UserDetails_UserDetailsId",
                         column: x => x.UserDetailsId,
                         principalTable: "UserDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -236,7 +227,7 @@ namespace Transcend.PL.Migrations
                         column: x => x.CarrierId,
                         principalTable: "Carriers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -275,11 +266,6 @@ namespace Transcend.PL.Migrations
                 name: "IX_AspNetUsers_CarrierId",
                 table: "AspNetUsers",
                 column: "CarrierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_CarrierId1",
-                table: "AspNetUsers",
-                column: "CarrierId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_UserDetailsId",
