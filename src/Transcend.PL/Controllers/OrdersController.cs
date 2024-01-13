@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using Transcend.BLL.Contracts;
 using Transcend.Common.Models.Carrier;
 using Transcend.Common.Models.Order;
@@ -9,7 +10,6 @@ namespace Transcend.PL.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Customer")]
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService orderService;
@@ -22,6 +22,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Customer")]
     public async Task<ActionResult<Response>> PlaceOrderAsync([FromBody] OrderIM orderIM)
     {
         await orderService.CreateOrderAsync(orderIM, currentUser.UserId);
@@ -35,12 +36,14 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet("GetAllOrders")]
+    [Authorize(Roles = "Customer")]
     public async Task<ActionResult<List<OrderVM>>> GetAllOrdersAsync()
     {
         return await orderService.GetAllOrdersByIdAsync(currentUser.UserId);
     }
 
     [HttpGet("TrackOrder/{id}")]
+    [Authorize(Roles = "Customer")]
     public async Task<ActionResult<OrderVM>> GetOrderStatusAsync(int id)
     {
         var order = await orderService.GetOrderInfoByIdAsync(id);
@@ -58,4 +61,29 @@ public class OrdersController : ControllerBase
         return this.Ok(order);
     }
 
+    [HttpGet("GetAllOrdersCarrier")]
+    [Authorize(Roles = "Carrier")]
+    public async Task<ActionResult<List<OrderVM>>> GetAllOrdersCarrierAsync()
+    {
+        return await orderService.GetAllOrdersByIdCarrierAsync(currentUser.UserId);
+    }
+
+    [HttpGet("TrackOrderCarrier/{id}")]
+    [Authorize(Roles = "Carrier")]
+    public async Task<ActionResult<OrderVM>> GetOrderStatusCarrierAsync(int id)
+    {
+        var order = await orderService.GetOrderInfoByIdAsync(id);
+
+        if (order == null)
+            return this.BadRequest(new Response
+            {
+                Status = "Order does not exist",
+                Message = "This order does not exist!"
+            });
+
+        if (order.CarrierId != currentUser.UserId)
+            return this.Forbid();
+
+        return this.Ok(order);
+    }
 }

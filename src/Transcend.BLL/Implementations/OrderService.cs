@@ -44,4 +44,9 @@ internal class OrderService : IOrderService
     {
         return await dbContext.Orders.Where(o => o.Id == orderId).ProjectTo<OrderVM>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync();
     }
+
+    public async Task<List<OrderVM>> GetAllOrdersByIdCarrierAsync(string carrierId)
+    {
+        return await this.dbContext.Orders.Where(o => o.CarrierId == carrierId).ProjectTo<OrderVM>(this.mapper.ConfigurationProvider).ToListAsync();
+    }
 }

@@ -14,4 +14,6 @@ public interface IOrderService
     Task<List<OrderVM>> GetAllOrdersByIdAsync(string userId);
 
     Task<OrderVM> GetOrderInfoByIdAsync(int orderId);
+
+    Task<List<OrderVM>> GetAllOrdersByIdCarrierAsync(string carrierId);
 }

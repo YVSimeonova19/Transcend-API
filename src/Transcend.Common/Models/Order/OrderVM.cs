@@ -17,4 +17,6 @@ public class OrderVM
     public DateTime ExpectedDeliveryDate { get; set; }
 
     public string UserPlaceId { get; set; } = string.Empty;
+
+    public string CarrierId {  get; set; } = string.Empty;
 }
