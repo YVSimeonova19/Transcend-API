@@ -19,5 +19,7 @@ public class MappingProfile : Profile
             .ForMember(d => d.Name, c => c.MapFrom(s => s.Carrier.Name));
 
         this.CreateMap<OrderIM, Order>();
+
+        this.CreateMap<Order, OrderVM>();
     }
 }

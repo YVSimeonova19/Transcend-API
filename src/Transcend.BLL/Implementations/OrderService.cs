@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +33,15 @@ internal class OrderService : IOrderService
         this.dbContext.Orders.Add(order);
 
         await this.dbContext.SaveChangesAsync();
+    }
+
+    public async Task<List<OrderVM>> GetAllOrdersByIdAsync(string userId)
+    {
+        return await this.dbContext.Orders.Where(o => o.UserPlaceId == userId).ProjectTo<OrderVM>(this.mapper.ConfigurationProvider).ToListAsync();
+    }
+
+    public async Task<OrderVM> GetOrderInfoByIdAsync(int orderId)
+    {
+        return await dbContext.Orders.Where(o => o.Id == orderId).ProjectTo<OrderVM>(this.mapper.ConfigurationProvider).FirstOrDefaultAsync();
     }
 }

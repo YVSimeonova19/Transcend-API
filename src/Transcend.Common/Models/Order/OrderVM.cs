@@ -15,4 +15,6 @@ public class OrderVM
     public string Status { get; set; } = string.Empty;
 
     public DateTime ExpectedDeliveryDate { get; set; }
+
+    public string UserPlaceId { get; set; } = string.Empty;
 }
