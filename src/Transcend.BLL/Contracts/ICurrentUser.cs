@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Transcend.BLL.Contracts;
 
-namespace Transcend.BLL.Contracts;
-
+// Keep the user currently logged in
 public interface ICurrentUser
 {
     string UserId { get; }

@@ -11,6 +11,7 @@ namespace Transcend.BLL;
 
 public static class DependencyInjection
 {
+    // Add services
     public static void AddServices(this IServiceCollection services)
     {
         services

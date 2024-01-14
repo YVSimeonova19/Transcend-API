@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Transcend.BLL.Contracts;
 using Transcend.Common.Models.User;
 using Transcend.DAL.Data;
@@ -19,6 +14,7 @@ internal class UserService : IUserService
     private readonly TranscendDBContext dbContext;
     private readonly IMapper mapper;
 
+    // Add dependency injections
     public UserService(UserManager<User> userManager, TranscendDBContext dbContext, IMapper mapper)
     {
         this.userManager = userManager;
@@ -26,6 +22,7 @@ internal class UserService : IUserService
         this.mapper = mapper;
     }
 
+    // Retrieve a user from the DB by id asyncronously
     public async Task<UserVM> GetUserByIdAsync(string id)
     {
         return this.mapper.Map<UserVM>(await userManager.Users
@@ -34,36 +31,46 @@ internal class UserService : IUserService
             .FirstOrDefaultAsync());
     }
 
+    // Update the current users information in the DB asyncronously
     public async Task<UserVM> UpdateUserAsync(string id, UserUM userUM)
     {
+        // Retrieve the user data from the DB
         var user = await userManager.Users
             .Include(usr => usr.UserDetails)
             .Where(usr => usr.Id == id)
             .FirstAsync();
 
+        //Check if the username is changed and apply the changes
         if(userUM.Username != null)
             user.UserName = userUM.Username;
 
+        //Check if the password is changed and apply the changes
         if (userUM.Password != null)
         {
+            // Encrypt the new password
             var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
 
             _ = await this.userManager.ResetPasswordAsync(user, token, userUM.Password);
         }
 
-        if(userUM.FirstName != null)
+        //Check if the first name is changed and apply the changes
+        if (userUM.FirstName != null)
             user.UserDetails.FirstName = userUM.FirstName;
 
-        if(userUM.LastName != null)
+        //Check if the last name is changed and apply the changes
+        if (userUM.LastName != null)
             user.UserDetails.LastName = userUM.LastName;
-
-        if(userUM.Email != null)
+        
+        //Check if the email is changed and apply the changes
+        if (userUM.Email != null)
             user.Email = userUM.Email;
 
-        if(userUM.PhoneNumber != null)
+        //Check if the phone number is changed and apply the changes
+        if (userUM.PhoneNumber != null)
             user.PhoneNumber = userUM.PhoneNumber;
 
-        if(userUM.ShippingAddress != null)
+        //Check if the shipping address is changed and apply the changes
+        if (userUM.ShippingAddress != null)
             user.UserDetails.ShippingAddress = userUM.ShippingAddress;
 
         await this.userManager.UpdateAsync(user);
@@ -71,13 +78,16 @@ internal class UserService : IUserService
         return this.mapper.Map<UserVM>(user);
     }
 
+    // Delete the current user asyncronously
     public async Task DeleteUserAsync(string id)
     {
+        // Retrieve the user
         var user = await userManager.Users
             .Where(usr => usr.Id == id)
             .Include(usr => usr.UserDetails)
             .FirstAsync();
 
+        // Retrieve the userDetails
         var userDetails = await dbContext.UserDetails
             .Where(ud => ud.Id == user.UserDetails.Id)
             .FirstAsync();
