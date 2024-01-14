@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Transcend.Common.Utilities;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Transcend.Common.Models.Order;
 
@@ -15,5 +9,5 @@ public class OrderIM
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    public string CarrierId { get; set; }
+    public string CarrierId { get; set; } = string.Empty;
 }

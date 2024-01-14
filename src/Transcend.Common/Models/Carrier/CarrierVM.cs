@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Transcend.Common.Models.Carrier;
+﻿namespace Transcend.Common.Models.Carrier;
 
 public class CarrierVM
 {

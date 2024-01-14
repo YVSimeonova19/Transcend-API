@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Transcend.Common.Models.User;
+﻿namespace Transcend.Common.Models.User;
 
 public class UserVM
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = String.Empty;
 
     public string Username { get; set; } = String.Empty;
 
