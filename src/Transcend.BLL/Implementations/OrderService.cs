@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 using Transcend.BLL.Contracts;
 using Transcend.Common.Models.Order;
 using Transcend.DAL.Data;
 using Transcend.DAL.Models;
+
+[assembly: InternalsVisibleToAttribute("Transcend.BLL.Test")]
 
 namespace Transcend.BLL.Implementations;
 

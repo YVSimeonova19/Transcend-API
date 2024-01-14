@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transcend.BLL", "Transcend.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transcend.DAL", "Transcend.DAL\Transcend.DAL.csproj", "{07FEA67A-A861-4295-864F-C16DA1706D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transcend.UnitTests", "Transcend.UnitTests\Transcend.UnitTests.csproj", "{953F78B7-5A5F-455C-B293-53C9F22C6F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transcend.BLL.Test", "Transcend.UnitTests\Transcend.BLL.Test.csproj", "{953F78B7-5A5F-455C-B293-53C9F22C6F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transcend.Common", "Transcend.Common\Transcend.Common.csproj", "{1B6BBF46-9901-4971-9621-6B06DCE36B22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transcend.Common", "Transcend.Common\Transcend.Common.csproj", "{1B6BBF46-9901-4971-9621-6B06DCE36B22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
