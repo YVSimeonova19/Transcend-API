@@ -1,12 +1,11 @@
-﻿using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using Transcend.BLL.Contracts;
+﻿using Transcend.BLL.Contracts;
 using Transcend.Common.Models.Carrier;
 
 namespace Transcend.PL.Helpers;
 
 public static class InitApp
 {
+    // Initialize the app and create carrier users if there are no users in the DB
     public static async Task InitAppAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
@@ -14,9 +13,11 @@ public static class InitApp
         var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var carrierService = scope.ServiceProvider.GetRequiredService<ICarrierService>();
 
+        // Check if there are users in the DB
         if ((await carrierService.GetAllCarriersAsync()).Count() != 0)
             return;
 
+        // Create carrier users
         var carriers = new List<CarrierIM> { 
             new CarrierIM {
                 Username = "speedy",
@@ -37,6 +38,7 @@ public static class InitApp
             }
         };
 
+        // Add the carrier users to the DB
         foreach(var carrier in carriers)
         {
             await authService.CreateCarrierAsync(carrier);

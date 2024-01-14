@@ -14,6 +14,7 @@ public class UsersController : ControllerBase
     private readonly IAuthService authService;
     private readonly ICurrentUser currentUser;
 
+    // Add dependency injections
     public UsersController (IUserService userService, IAuthService authService, ICurrentUser currentUser)
     {
         this.userService = userService;
@@ -21,12 +22,14 @@ public class UsersController : ControllerBase
         this.currentUser = currentUser;
     }
 
+    // Display the current users information asyncronously
     [HttpGet]
     public async Task<ActionResult<UserVM>> DisplayUserDataAsync()
     {
        return await userService.GetUserByIdAsync(currentUser.UserId);
     }
 
+    // Update the current user asyncronously
     [HttpPatch]
     public async Task<ActionResult<UserVM>> EditUser([FromBody]UserUM userUM)
     {
@@ -36,6 +39,7 @@ public class UsersController : ControllerBase
         return await userService.UpdateUserAsync(currentUser.UserId, userUM);
     }
 
+    // Delete the current user asyncronously
     [HttpDelete]
     public async Task DeleteUser()
     {
