@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Transcend.DAL.Models;
 
-namespace Transcend.DAL.Models;
-
+// Create user roles
 public class UserRoles
 {
     public const string Customer = "Customer";
