@@ -19,7 +19,7 @@ Carriers are pre-registered into the database, as the program is supposed to be 
 <br/>
 <br/>
 
-## You can find the project [HERE][ProjectLink] 💻
+## The project has been deployed in Azure. You can find it [HERE][ProjectLink] 💻
 
 [ProjectLink]: https://transcendapiproject.azurewebsites.net/swagger/index.html
 
