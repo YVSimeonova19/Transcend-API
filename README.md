@@ -1,5 +1,7 @@
 # [Transcend][ProjectLink]
 
+<img align="right" alt="logo" width="350px" src="https://cdn.discordapp.com/attachments/759778193044799519/1196224456855650325/Untitled-1.png?ex=65b6d9d7&is=65a464d7&hm=c4157eb806ac6ee449f8aa040670a9d12471b339ee5059d1697f73fd8637b11a&">
+
 ## Project resume 📑
 This is an API for a **delivery tracking system** with 2 different types of users - *customer* and *carrier*.
 
